@@ -22,7 +22,7 @@ class Solution:
 obj = Solution()
 print(obj.wordBreak("leetcode", ["leet","code"]))
 
-# O(N^2)
+# O(N^3): search in a list is O(N)
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
         m = len(s)
@@ -31,5 +31,18 @@ class Solution:
         for i in range(m):
             for j in range(i + 1, m + 1):
                 if dp[i] == 1  and s[i:j] in wordDict:
+                    dp[j] = 1
+        return dp[m] == 1
+
+# O(N^2): search in set is O(1), Python set is a hash table.
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        m = len(s)
+        wordSet = set(wordDict)
+        dp = [0] * (m + 1)
+        dp[0] = 1
+        for i in range(m):
+            for j in range(i + 1, m + 1):
+                if dp[i] == 1  and s[i:j] in wordSet:
                     dp[j] = 1
         return dp[m] == 1

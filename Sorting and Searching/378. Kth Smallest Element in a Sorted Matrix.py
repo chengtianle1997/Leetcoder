@@ -12,3 +12,6 @@ class Solution:
                 hi = mid
         return lo
 
+# heap n^2 logk
+
+# sort n^2 logn

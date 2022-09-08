@@ -8,12 +8,14 @@ class MedianFinder:
         # so we add a minus sign to make it a max heap
 
     def addNum(self, num: int) -> None:
+        # add item
         if len(self.minheap) > 0 and num > self.minheap[0]:
             # add to the min heap
             heapq.heappush(self.minheap, num)
         else:
             # add to the max heap, add a minus sign
             heapq.heappush(self.maxheap, -num)
+        
         # check balance
         while len(self.maxheap) > len(self.minheap):
             # pop the maximum from the max heap

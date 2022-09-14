@@ -24,6 +24,54 @@ class Solution:
         
         return list(res)
 
+# An improved hash set solution, O(n^2)
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        
+        res = set()
+        
+        # classify the nums into positive, negative and zero lists
+        pos, neg, zeros = [], [], []
+        for num in nums:
+            if num > 0:
+                pos.append(num)
+            elif num < 0:
+                neg.append(num)
+            else:
+                # num == 0
+                zeros.append(num)
+        
+        # if there are more than three zeros, we will have [0, 0, 0]
+        if len(zeros) >= 3:
+            res.add(tuple([0, 0, 0]))
+            
+        # convert pos and neg to set
+        pos_set, neg_set = set(pos), set(neg)
+        
+        # if there is at least one zeros, we can have one positive + one negative
+        if len(zeros) > 0:
+            for num in pos:
+                target = -1 * num
+                if target in neg_set:
+                    res.add(tuple([target, 0, num]))
+        
+        # pos + pos + neg
+        for i in range(len(pos)):
+            for j in range(i + 1, len(pos)):
+                target = 0 - pos[i] - pos[j]
+                if target in neg_set:
+                    res.add(tuple(sorted([target, pos[i], pos[j]])))
+        
+        # neg + neg + pos
+        for i in range(len(neg)):
+            for j in range(i + 1, len(neg)):
+                target = 0 - neg[i] - neg[j]
+                if target in pos_set:
+                    res.add(tuple(sorted([neg[i], neg[j], target])))
+        
+        return list(res)
+                    
+
 # Two pointers Solution, sorting based
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:

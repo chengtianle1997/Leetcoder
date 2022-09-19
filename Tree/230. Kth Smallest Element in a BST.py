@@ -25,7 +25,8 @@ class Solution:
             else:
                 return self.kthSmallest(root.right, k - count - 1)
 
-# Recursive, O(n), in=order traversal
+
+# Recursive, O(n), in-order traversal
 class Solution:
     def traversal(self, root):
         if root.left:
@@ -42,3 +43,23 @@ class Solution:
         self.number = 0
         self.traversal(root)
         return self.number
+
+# Iterative, O(n), in order traversal
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        stack = []
+        # iterate until the left-most node
+        while root:
+            stack.append(root)
+            root = root.left
+        # count nodes
+        while k > 0:
+            node = stack.pop()
+            k -= 1
+            if k == 0:
+                return node.val
+            right = node.right
+            while right:
+                stack.append(right)
+                right = right.left
+        return -1
